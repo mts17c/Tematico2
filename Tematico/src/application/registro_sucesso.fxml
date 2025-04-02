@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="950.0" style="-fx-background-color: #ECF0F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+   <children>
+      <ImageView fitHeight="25.0" fitWidth="52.0" layoutX="549.0" layoutY="248.0">
+         <image>
+            <Image url="/cad.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="351.0" layoutY="243.0" prefHeight="35.0" prefWidth="211.0" text="Registro Concluido!" textFill="#1f972b">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="436.0" layoutY="288.0" mnemonicParsing="false" onAction="#sucesso_para_escolha" text="Tela Inicial" />
+      <ImageView fitHeight="93.0" fitWidth="200.0" layoutX="372.0" layoutY="132.0" AnchorPane.leftAnchor="372.0" AnchorPane.topAnchor="132.0">
+         <image>
+            <Image url="/logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
