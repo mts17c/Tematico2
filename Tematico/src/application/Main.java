@@ -3,13 +3,9 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -18,9 +14,8 @@ public class Main extends Application {
 	public void start(Stage janela) {
 		try{
 			//janela_principal
-			Parent root = FXMLLoader.load(getClass().getResource("escolha.fxml"));
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("escolha.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			janela.setResizable(false);
 			janela.setWidth(950);
 			janela.setHeight(520);

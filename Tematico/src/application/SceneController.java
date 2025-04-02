@@ -61,7 +61,7 @@ public class SceneController {
 	private Label campo_nome_usu;	
 
 	public void escolha_para_login_usuario(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("login.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -69,7 +69,7 @@ public class SceneController {
 	}
 	
 	public void escolha_para_login_empresa(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("login_empresa.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("login_empresa.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -77,7 +77,7 @@ public class SceneController {
 	}
 	
 	public void login_para_registro_usuario(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("registro.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("registro.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -86,7 +86,7 @@ public class SceneController {
 	}
 	
 	public void login_para_registro_empresa(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("registro_empresa.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_empresa.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -103,7 +103,7 @@ public class SceneController {
 				aux=1;
 			}
 		    if (verifica_registro_usu(nome_usu) && aux==0) {
-		        root = FXMLLoader.load(getClass().getResource("registro_sucesso.fxml"));
+		        root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_sucesso.fxml"));
 		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		        scene = new Scene(root);
 		        stage.setScene(scene);
@@ -121,7 +121,7 @@ public class SceneController {
 				aux=1;
 			}
 		    if (verifica_registro_emp(nome_emp) && aux==0) {
-		        root = FXMLLoader.load(getClass().getResource("registro_sucesso.fxml"));
+		        root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_sucesso.fxml"));
 		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		        scene = new Scene(root);
 		        stage.setScene(scene);
@@ -134,7 +134,7 @@ public class SceneController {
 	}
 
 	public void escolha_para_registro(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("registro.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("registro.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -142,7 +142,7 @@ public class SceneController {
 	}
 	
 	public void sucesso_para_escolha(javafx.event.ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("escolha.fxml"));
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("escolha.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -154,7 +154,7 @@ public class SceneController {
 	    String senha = senha_usu.getText();
 	    
 	    if (verificarLogin_Usu(login, senha)) {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("Hub.fxml"));
+	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub.fxml"));
 	        Parent root = loader.load();
 	        HubController hubController = loader.getController();
 	        hubController.setNomeUsuario(login);
@@ -172,7 +172,7 @@ public class SceneController {
 	    String senha = senha_emp.getText();
 
 	    if (verificarLogin_Emp(login, senha)) {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("Hub_emp.fxml"));
+	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_emp.fxml"));
 	        Parent root = loader.load();
 	        HubController hubController = loader.getController();
 	        hubController.setNomeUsuario(login);

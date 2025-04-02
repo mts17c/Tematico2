@@ -1,0 +1,4 @@
+joao,1234,joao@email.com
+maria,abcd,maria@email.com
+pedro,senha123,pedro@email.com
+ana,12345,ana@email.com
