@@ -43,7 +43,6 @@
             </TableView>
             <Button fx:id="adicionar" layoutX="854.0" layoutY="227.0" mnemonicParsing="false" text="Adicionar" />
             <Button fx:id="remover" layoutX="854.0" layoutY="263.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Remover" />
-            <Button fx:id="visualizar" layoutX="854.0" layoutY="298.0" mnemonicParsing="false" text="Visualizar" />
          </children></AnchorPane>
   </items>
 </SplitPane>

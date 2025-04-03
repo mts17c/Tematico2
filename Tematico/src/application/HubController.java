@@ -43,8 +43,6 @@ public class HubController {
     private Button adicionar;
     @FXML
     private Button remover;
-    @FXML
-    private Button visualizar;
     
     static String x;
     
@@ -63,7 +61,6 @@ public class HubController {
     	table.setItems(setores);
     	adicionar.setOnAction(event -> abrirTelaAdicionarSetor());
     	remover.setOnAction(event -> removerSetor());
-    	visualizar.setOnAction(event -> abrirTelaDetalhes());
     }
     
     private void abrirTelaAdicionarSetor() {
