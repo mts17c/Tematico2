@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.DetalhesSetorController">
+    
+    <Label text="Nome do Setor:" />
+    <Label fx:id="labelNome" text="-" />
+    
+    <Label text="Código:" />
+    <Label fx:id="labelCod" text="-" />
+    
+    <Label text="Energia Consumida:" />
+    <Label fx:id="labelEnergia" text="-" />
+    
+    <Label text="Carbono Emitido:" />
+    <Label fx:id="labelCarb" text="-" />
+    
+    <Label text="Rank:" />
+    <Label fx:id="labelRank" text="-" />
+    
+    <Button text="Fechar" onAction="#fechar"/>
+</VBox>

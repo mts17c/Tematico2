@@ -10,13 +10,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -59,7 +62,7 @@ public class SceneController {
 	private Label label_reg_usu;
 	@FXML
 	private Label campo_nome_usu;	
-
+    
 	public void escolha_para_login_usuario(javafx.event.ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -120,7 +123,7 @@ public class SceneController {
 			if(nome_emp.isEmpty() || cnpj_emp.isEmpty() || senha_emp.isEmpty()) {
 				aux=1;
 			}
-		    if (verifica_registro_emp(nome_emp) && aux==0) {
+		    if (verifica_registro_emp(nome_emp, cnpj_emp, senha_emp) && aux==0) {
 		        root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_sucesso.fxml"));
 		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		        scene = new Scene(root);
@@ -174,12 +177,14 @@ public class SceneController {
 	    if (verificarLogin_Emp(login, senha)) {
 	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_emp.fxml"));
 	        Parent root = loader.load();
+	        
 	        HubController hubController = loader.getController();
 	        hubController.setNomeUsuario(login);
+	        
 	        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 	        scene = new Scene(root);
 	        stage.setScene(scene);
-	        stage.show();
+	        stage.show();    
 	    } else {
 	    	label_emp.setText("Login ou senha inválidos");
 	    }
@@ -237,21 +242,34 @@ public class SceneController {
 			return true;		
 	}
 
-	private boolean verifica_registro_emp(String nome1) {
-		try(InputStream is = getClass().getResourceAsStream("/empresas.txt"); 
-				BufferedReader br = new BufferedReader(new InputStreamReader(is))){
-				String linha;
-				while((linha = br.readLine()) != null) {
-	                String[] dados = linha.split(",");
-	                String nome = dados[0];
-	                if (nome.equals(nome1)) {
-	                    return false; 
-	                }
-				}
-			}catch (Exception e) {
-			}
-			return true;		
+	private boolean verifica_registro_emp(String nome1, String cnpj, String senha) {
+	    File file = new File("empresas.txt");
+	    boolean empresaExiste = false;
+	    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	        String linha;
+	        while ((linha = br.readLine()) != null) {
+	            String[] dados = linha.split(",");
+	            if (dados.length >= 2 && dados[0].equals(nome1) && dados[1].equals(cnpj)) {
+	                empresaExiste = true;
+	                break;
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    if (!empresaExiste) {
+	        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+	            bw.write(nome1 + "," + cnpj + "," + senha);
+	            bw.newLine();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return !empresaExiste; 
 	}
+
+	
 
 }
 

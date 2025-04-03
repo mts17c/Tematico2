@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.21608040201005024" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="520.0" prefWidth="950.0" style="-fx-background-color: #ECF0F1;" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HubController">
+<SplitPane dividerPositions="0.21608040201005024" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="520.0" prefWidth="950.0" style="-fx-background-color: #ECF0F1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HubController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
@@ -23,7 +24,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ImageView layoutX="870.0" layoutY="23.0" AnchorPane.rightAnchor="85.0">
+            <ImageView layoutX="870.0" layoutY="23.0" AnchorPane.rightAnchor="20.0">
                <image>
                   <Image url="@/icon.png" />
                </image>
@@ -31,27 +32,17 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="950.0">
          <children>
-            <VBox layoutX="14.0" layoutY="51.0">
-               <children>
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="128.0" text="Administração e Gestão" />
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="128.0" text="Financeiro" />
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="128.0" text="Recursos Humanos (RH)" />
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="128.0" text="Vendas e Comercial" />
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="128.0" text="Marketing" />
-                  <Label contentDisplay="CENTER" prefHeight="46.0" prefWidth="162.0" text="Tecnologia da Informação" />
-               </children>
-            </VBox>
-            <ProgressBar layoutX="176.0" layoutY="66.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar layoutX="176.0" layoutY="110.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar layoutX="176.0" layoutY="159.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar layoutX="176.0" layoutY="205.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar layoutX="176.0" layoutY="248.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar layoutX="176.0" layoutY="296.0" prefWidth="200.0" progress="0.0" />
-            <Label layoutX="259.0" layoutY="43.0" prefHeight="17.0" prefWidth="35.0" text="Metas">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
+            <TableView fx:id="table" prefHeight="403.0" prefWidth="866.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="nome" prefWidth="75.0" text="Nome" />
+                <TableColumn fx:id="cod" prefWidth="75.0" text="Código" />
+                  <TableColumn fx:id="energia" prefWidth="186.0" text="Consumo de Energia (Kw/h)" />
+                  <TableColumn fx:id="carb" prefWidth="141.0" text="Emissão Gás Carbônico" />
+                  <TableColumn fx:id="rank" prefWidth="77.0" text="Ranking" />
+              </columns>
+            </TableView>
+            <Button fx:id="adicionar" layoutX="854.0" layoutY="227.0" mnemonicParsing="false" text="Adicionar" />
+            <Button fx:id="remover" layoutX="854.0" layoutY="263.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Remover" />
          </children></AnchorPane>
   </items>
 </SplitPane>
