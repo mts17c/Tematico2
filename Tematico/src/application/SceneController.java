@@ -159,8 +159,10 @@ public class SceneController {
 	    if (verificarLogin_Usu(login, senha)) {
 	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub.fxml"));
 	        Parent root = loader.load();
+	        
 	        HubController hubController = loader.getController();
 	        hubController.setNomeUsuario(login);
+	        
 	        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 	        scene = new Scene(root);
 	        stage.setScene(scene);
