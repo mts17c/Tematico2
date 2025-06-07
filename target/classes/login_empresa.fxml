@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="login_emp" layoutX="401.0" layoutY="222.0" />
       <TextField fx:id="senha_emp" layoutX="401.0" layoutY="267.0" />
-      <Label layoutX="401.0" layoutY="205.0" text="Login:" />
+      <Label layoutX="401.0" layoutY="205.0" text="CNPJ:" />
       <Label layoutX="401.0" layoutY="252.0" text="Senha:" />
       <Button layoutX="401.0" layoutY="307.0" mnemonicParsing="false" onAction="#loginemp_para_hub" text="Entrar" />
       <Button layoutX="486.0" layoutY="307.0" mnemonicParsing="false" onAction="#login_para_registro_empresa" text="Registrar" />

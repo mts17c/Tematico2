@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class HubController {
+	
     @FXML
     private Label campo_nome_usu;
     @FXML
@@ -43,14 +44,13 @@ public class HubController {
     private Button remover;
     @FXML
     private Button sair;
+    @FXML
+    private Button funcionarios;
     
     static String x;
     
     SceneController s = new SceneController();
-    
-    public void setNomeUsuario(String nome) {
-        campo_nome_usu1.setText(nome);
-    }
+    HubControllerFunc h = new HubControllerFunc();
     
     public void setNomeUsuarioEmp(String nome) {
         campo_nome_usu.setText(nome);
@@ -60,7 +60,12 @@ public class HubController {
     
     public void Sair(javafx.event.ActionEvent event) throws IOException {
     	s.escolha(event);
-    }   
+    }  
+    
+    public void Funcionarios(javafx.event.ActionEvent event) throws IOException {
+    	h.controla(x);
+    	s.Funcionarios(event);
+    }
 
     public void initialize() {
     	nome.setCellValueFactory(new PropertyValueFactory<Setor, String>("nome"));

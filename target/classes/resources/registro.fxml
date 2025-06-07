@@ -11,13 +11,18 @@
    <children>
       <TextField fx:id="registro_nome_usu" layoutX="401.0" layoutY="222.0" />
       <TextField fx:id="registro_senha_usu" layoutX="401.0" layoutY="262.0" />
-      <Label layoutX="401.0" layoutY="205.0" />
-      <Label layoutX="401.0" layoutY="247.0" text="Senha:" />
-      <Button layoutX="443.0" layoutY="336.0" mnemonicParsing="false" onAction="#registro_para_sucesso" text="Registrar" />
       <Label layoutX="401.0" layoutY="205.0" text="Nome:" />
+      <Label layoutX="401.0" layoutY="247.0" text="Senha:" />
       <TextField fx:id="registro_email_usu" layoutX="401.0" layoutY="304.0" />
       <Label layoutX="401.0" layoutY="287.0" text="E-Mail:" />
-      <Label fx:id="label_reg_usu" layoutX="450.0" layoutY="373.0" prefHeight="17.0" prefWidth="46.0" textFill="#da0b0b" AnchorPane.topAnchor="380.0" />
+
+      <!-- Novo campo CNPJ -->
+      <TextField fx:id="registro_cnpj_usu" layoutX="401.0" layoutY="344.0" />
+      <Label layoutX="401.0" layoutY="327.0" text="CNPJ da sua Empresa:" />
+
+      <Button layoutX="443.0" layoutY="386.0" mnemonicParsing="false" onAction="#registro_para_sucesso" text="Registrar" />
+      <Label fx:id="label_reg_usu" layoutX="450.0" layoutY="423.0" prefHeight="17.0" prefWidth="46.0" textFill="#da0b0b" />
+
       <ImageView fitHeight="93.0" fitWidth="200.0" layoutX="376.0" layoutY="103.0" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="112.0">
          <image>
             <Image url="/logo.png" />
