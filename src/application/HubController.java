@@ -56,7 +56,7 @@ public class HubController {
         campo_nome_usu.setText(nome);
         x=nome;
         carregarSetoresDeArquivo(x);
-    }  
+    }
     
     public void Sair(javafx.event.ActionEvent event) throws IOException {
     	s.escolha(event);
@@ -88,7 +88,6 @@ public class HubController {
             
             javafx.stage.Stage stage = new javafx.stage.Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Adicionar setor");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

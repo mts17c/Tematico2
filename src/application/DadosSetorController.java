@@ -26,14 +26,11 @@ public class DadosSetorController {
             System.out.println("O nome do setor não pode ser vazio!");
             return;
         }
-
-        // Criando um novo setor com valores padrão
+        //novo setor com valores padrão
         Setor novoSetor = new Setor(nome, 0, 0, 0, 0);
 
-        // Adiciona ao HubController
         hubController.adicionarSetor(novoSetor);
 
-        // Fecha a janela após adicionar
         ((Stage) go.getScene().getWindow()).close();
     }
 }

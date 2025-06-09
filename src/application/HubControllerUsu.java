@@ -9,9 +9,12 @@ public class HubControllerUsu {
 	
     @FXML
     private Button sair;
-    
-    
+   
     SceneController s = new SceneController();
+    
+    public void Sair1(javafx.event.ActionEvent event) throws IOException {
+    	s.voltarParaTelaPrincipal(event);
+    }   
     
     public void Sair(javafx.event.ActionEvent event) throws IOException {
     	s.escolha(event);

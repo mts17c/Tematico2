@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -161,6 +162,18 @@ public class SceneController {
 		stage.show();		
 	}
 	
+	public void voltarParaTelaPrincipal(javafx.event.ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_emp.fxml"));
+        Parent root = loader.load();
+	    HubController hubController = loader.getController();
+	    hubController.setNomeUsuarioEmp(HubControllerFunc.x); 
+	    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	
 	//--------------------------------------------------------------------------
 	public void login_para_hub(javafx.event.ActionEvent event) throws IOException, URISyntaxException {
 	    String login = login_usu.getText();
@@ -269,11 +282,11 @@ public class SceneController {
 	        while ((linha = br.readLine()) != null) {
 	            String[] dados = linha.split(",");
 	            if (dados.length >= 6) {
-	                String nome = dados[1].trim();    // posição do nome
-	                String setor = dados[5].trim();   // posição do setor
+	                String nome = dados[1].trim();   
+	                String setor = dados[5].trim();   
 
 	                if (nome.equals(nome1)) {
-	                    return !setor.isEmpty();      // true se setor não está vazio
+	                    return !setor.isEmpty();     
 	                }
 	            }
 	        }
