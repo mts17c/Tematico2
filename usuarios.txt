@@ -1,2 +1,0 @@
-Usuario:,mateus,senha,mateus@,123,,mateus
-Usuario:,joao,senha,joao@,912,Ti,joao

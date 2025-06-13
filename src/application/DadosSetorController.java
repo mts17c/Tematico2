@@ -27,7 +27,7 @@ public class DadosSetorController {
             return;
         }
         //novo setor com valores padrão
-        Setor novoSetor = new Setor(nome, 0, 0, 0, 0);
+        Setor novoSetor = new Setor(nome, 0, 0, 0);
 
         hubController.adicionarSetor(novoSetor);
 

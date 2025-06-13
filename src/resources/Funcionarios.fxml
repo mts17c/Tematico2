@@ -31,6 +31,7 @@
             <Image url="@/icon.png" />
           </image>
         </ImageView>
+            <Label layoutX="387.0" layoutY="87.0" text="Dica: dois cliques no Funcionario" underline="true" />
       </children>
     </AnchorPane>
 

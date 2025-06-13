@@ -5,6 +5,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,11 +33,9 @@ public class HubController {
     @FXML
     private TableColumn<Setor, String> nome;
     @FXML
-    private TableColumn<Setor, Integer> cod;
+    private TableColumn<Setor, Double> carb;
     @FXML
-    private TableColumn<Setor, Integer> carb;
-    @FXML
-    private TableColumn<Setor, Integer> energia;
+    private TableColumn<Setor, Double> energia;
     @FXML
     private TableColumn<Setor, Integer> rank;
     
@@ -69,13 +72,18 @@ public class HubController {
 
     public void initialize() {
     	nome.setCellValueFactory(new PropertyValueFactory<Setor, String>("nome"));
-    	cod.setCellValueFactory(new PropertyValueFactory<Setor, Integer>("cod"));
-    	energia.setCellValueFactory(new PropertyValueFactory<Setor, Integer>("energia"));
-    	carb.setCellValueFactory(new PropertyValueFactory<Setor, Integer>("carb"));
+    	energia.setCellValueFactory(new PropertyValueFactory<Setor, Double>("energia"));
+    	carb.setCellValueFactory(new PropertyValueFactory<Setor, Double>("carb"));
     	rank.setCellValueFactory(new PropertyValueFactory<Setor, Integer>("rank"));
     	table.setItems(setores);
     	adicionar.setOnAction(event -> abrirTelaAdicionarSetor());
-    	remover.setOnAction(event -> removerSetor());
+    	remover.setOnAction(event -> {
+			try {
+				removerSetor();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
     }
     
     private void abrirTelaAdicionarSetor() {
@@ -96,15 +104,19 @@ public class HubController {
 
     public void adicionarSetor(Setor setor) {
         setores.add(setor);
+        atualizarRankings();
         salvarSetoresEmArquivo(x);
+        table.refresh();
     }
     
     @FXML
-    public void removerSetor() {
+    public void removerSetor() throws IOException {
         Setor setorSelecionado = table.getSelectionModel().getSelectedItem();
-        if (setorSelecionado != null) {
+        if (setorSelecionado != null && verifica(setorSelecionado.getNome())) {
             setores.remove(setorSelecionado);
+            atualizarRankings(); 
             salvarSetoresEmArquivo(x);
+            table.refresh();
         }
     }
 
@@ -113,17 +125,49 @@ public class HubController {
     }
     
     public void salvarSetoresEmArquivo(String nomeEmpresa) {
+        Map<String, List<Setor>> todasEmpresas = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("setores.txt"))) {
+            String linha;
+            String empresaAtual = null;
+
+            while ((linha = reader.readLine()) != null) {
+                if (linha.startsWith("EMPRESA:")) {
+                    empresaAtual = linha.substring(8).trim();
+                    todasEmpresas.putIfAbsent(empresaAtual, new ArrayList<>());
+                } else if (empresaAtual != null && !linha.isEmpty()) {
+                    String[] dados = linha.split(",");
+                    if (dados.length == 4) {
+                    	Setor setor = new Setor(dados[0], Double.parseDouble(dados[1]), Double.parseDouble(dados[2]), Integer.parseInt(dados[3]));
+                        todasEmpresas.get(empresaAtual).add(setor);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        todasEmpresas.put(nomeEmpresa, new ArrayList<>(setores));
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("setores.txt"))) {
-            writer.write("EMPRESA: " + nomeEmpresa);
-            writer.newLine();
-            for (Setor setor : setores) {
-                writer.write(setor.getNome() + "," + setor.getCod() + "," + setor.getEnergia() + "," + setor.getCarb() + "," + setor.getRank());
+            for (Map.Entry<String, List<Setor>> entry : todasEmpresas.entrySet()) {
+                writer.write("EMPRESA: " + entry.getKey());
                 writer.newLine();
+                for (Setor setor : entry.getValue()) {
+                    writer.write(setor.getNome() + "," + setor.getEnergia() + "," + setor.getCarb() + "," + setor.getRank());
+                    writer.newLine();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+    private void atualizarRankings() {
+        setores.sort((s1, s2) -> Double.compare(s1.getCarb(), s2.getCarb()));
+        for (int i = 0; i < setores.size(); i++) {
+            setores.get(i).setRank(i + 1);
+        }
+    }
+
+
     
     public void carregarSetoresDeArquivo(String nomeEmpresa) {
         setores.clear();
@@ -136,14 +180,44 @@ public class HubController {
                     empresaEncontrada = linha.equals("EMPRESA: " + nomeEmpresa);
                 } else if (empresaEncontrada && !linha.isEmpty()) {
                     String[] dados = linha.split(",");
-                    if (dados.length == 5) {
-                        Setor setor = new Setor(dados[0], Integer.parseInt(dados[1]), Integer.parseInt(dados[2]), Integer.parseInt(dados[3]), Integer.parseInt(dados[4]));
+                    if (dados.length == 4) {
+                        Setor setor = new Setor(dados[0], Double.parseDouble(dados[1]), Double.parseDouble(dados[2]), Integer.parseInt(dados[3]));
                         setores.add(setor);
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        atualizarRankings();
+        table.refresh();
+    }
+    
+    public boolean verifica(String setor) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader("usuarios.txt"))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                if (linha.startsWith("Usuario:,")) {
+                    String[] dadosEmpresa = linha.split(",");
+                    if (dadosEmpresa.length >= 5 && dadosEmpresa[5].equals(setor)) {
+                    	return false;
+                    }
+                }
+            }
+            return true;
+        }  	
+    }
+    
+    public void sugestoes(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("chatbot.fxml"));
+            Parent root = loader.load();
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Chatbot");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();	
         }
     }
 

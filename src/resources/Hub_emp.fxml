@@ -35,16 +35,16 @@
             <TableView fx:id="table" prefHeight="296.0" prefWidth="866.0" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="nome" prefWidth="75.0" text="Nome" />
-                <TableColumn fx:id="cod" prefWidth="75.0" text="Código" />
                   <TableColumn fx:id="energia" prefWidth="186.0" text="Consumo de Energia (Kw/h)" />
-                  <TableColumn fx:id="carb" prefWidth="141.0" text="Emissão Gás Carbônico" />
-                  <TableColumn fx:id="rank" prefWidth="77.0" text="Ranking" />
+                  <TableColumn fx:id="carb" prefWidth="199.0" text="Emissão Gás Carbônico (kg CO₂)" />
+                  <TableColumn fx:id="rank" prefWidth="64.0" text="Ranking" />
               </columns>
             </TableView>
             <Button fx:id="adicionar" layoutX="854.0" layoutY="194.0" mnemonicParsing="false" text="Adicionar" />
             <Button fx:id="remover" layoutX="854.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Remover" />
             <Button fx:id="sair" layoutX="854.0" layoutY="303.0" mnemonicParsing="false" onAction="#Sair" prefHeight="25.0" prefWidth="67.0" text="Sair" />
             <Button fx:id="funcionarios" layoutX="28.0" layoutY="281.0" mnemonicParsing="false" onAction="#Funcionarios" prefHeight="68.0" prefWidth="87.0" text="Funcionarios" />
+            <Button layoutX="138.0" layoutY="281.0" mnemonicParsing="false" onAction="#sugestoes" prefHeight="68.0" prefWidth="87.0" text="Sugestoes IA" />
          </children></AnchorPane>
   </items>
 </SplitPane>

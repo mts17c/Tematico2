@@ -56,6 +56,8 @@ public class SceneController {
 	@FXML
 	private Label campo_nome_usu;
 	
+	private String usuarioLogado;
+
     
 	public void escolha(javafx.event.ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getClassLoader().getResource("escolha.fxml"));
@@ -183,6 +185,10 @@ public class SceneController {
 	    	if(verificaUsu_setor(login)) {
 		        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_usu.fxml"));
 		        Parent root = loader.load();
+		        String empr = verificaEmpresa();
+		        String seto = verificaSetor();
+		        FuncionarioMaquinasController controller = loader.getController();
+		        controller.carregarDados(empr, seto);
 		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		        scene = new Scene(root);
 		        stage.setScene(scene);
@@ -236,6 +242,7 @@ public class SceneController {
 	                String nome = dados[1];
 	                String senha1 = dados[2];
 	                if (nome.equals(login) && senha1.equals(senha)) {
+	                    usuarioLogado = nome; 
 	                    return true;
 	                }
 	            }
@@ -246,7 +253,6 @@ public class SceneController {
 
 	    return false;
 	}
-
 
 	private boolean verificarLogin_Emp(String login, String senha) {
 	    File file = new File("empresas.txt"); 
@@ -284,7 +290,6 @@ public class SceneController {
 	            if (dados.length >= 6) {
 	                String nome = dados[1].trim();   
 	                String setor = dados[5].trim();   
-
 	                if (nome.equals(nome1)) {
 	                    return !setor.isEmpty();     
 	                }
@@ -361,8 +366,40 @@ public class SceneController {
 
 	    return !empresaExiste;
 	}
+	
+	public String verificaEmpresa() throws IOException {
+	    File file = new File("usuarios.txt");
+	    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	        String linha;
+	        while ((linha = br.readLine()) != null) {
+	            String[] dados = linha.split(",");
+	            if (dados.length >= 6) {
+	                String nome = dados[1].trim();
+	                if (nome.equals(usuarioLogado)) {
+	                    return dados[4].trim();
+	                }
+	            }
+	        }
+	    }
+	    return null; 
+	}
 
-
+	public String verificaSetor() throws IOException {
+	    File file = new File("usuarios.txt");
+	    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	        String linha;
+	        while ((linha = br.readLine()) != null) {
+	            String[] dados = linha.split(",");
+	            if (dados.length >= 6) {
+	                String nome = dados[1].trim();
+	                if (nome.equals(usuarioLogado)) {
+	                    return dados[5].trim();
+	                }
+	            }
+	        }
+	    }
+	    return null; 
+	}
 	
 
 }
