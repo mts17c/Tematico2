@@ -127,16 +127,18 @@ public class SceneController {
 			if(cnpj_emp.isEmpty() || senha_emp.isEmpty()) {
 				aux=1;
 			}
-		    if (verifica_registro_emp(cnpj_emp, senha_emp) && aux==0) {
-		        root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_sucesso.fxml"));
-		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		        scene = new Scene(root);
-		        stage.setScene(scene);
-		        stage.show();
-		    } else {
-		    	label_reg_emp.setText("Invalido!");
-		    	aux=0;
-		    }
+			if(verificarcnpj_emp(cnpj_emp, senha_emp)) {
+			    if (verifica_registro_emp(cnpj_emp, senha_emp) && aux==0) {
+			        root = FXMLLoader.load(getClass().getClassLoader().getResource("registro_sucesso.fxml"));
+			        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			        scene = new Scene(root);
+			        stage.setScene(scene);
+			        stage.show();
+			    } else {
+			    	label_reg_emp.setText("Invalido!");
+			    	aux=0;
+			    }
+			}
 		}	
 	}
 
@@ -210,20 +212,75 @@ public class SceneController {
 	public void loginemp_para_hub(javafx.event.ActionEvent event) throws IOException {
 	    String login = login_emp.getText();
 	    String senha = senha_emp.getText();
+	    if(verificarcnpj_emp(login, senha)){
+		    if (verificarLogin_Emp(login, senha)) {
+		        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_emp.fxml"));
+		        Parent root = loader.load();
+		        
+		        HubController hubController = loader.getController();
+		        hubController.setNomeUsuarioEmp(login);
+		        
+		        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		        scene = new Scene(root);
+		        stage.setScene(scene);
+		        stage.show();    
+		    } else {
+		    	label_emp.setText("Login ou senha inválidos");
+		    }
+	    }
+	}
+	
+	public boolean verificarcnpj_emp(String login, String senha) {
+	    if (login == null || login.length() != 14) {
+	        label_emp.setText("CNPJ deve ter 14 dígitos numéricos");
+	        return false;
+	    }
+
+	    for (char c : login.toCharArray()) {
+	        if (!Character.isDigit(c)) {
+	            label_emp.setText("CNPJ deve conter apenas números");
+	            return false;
+	        }
+	    }
+
+	    boolean todosIguais = true;
+	    for (int i = 1; i < 14; i++) {
+	        if (login.charAt(i) != login.charAt(0)) {
+	            todosIguais = false;
+	            break;
+	        }
+	    }
+	    if (todosIguais) {
+	        label_emp.setText("CNPJ inválido (todos os dígitos iguais)");
+	        return false;
+	    }
+
+	    int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+	    int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+	    int soma = 0;
+	    for (int i = 0; i < 12; i++) {
+	        soma += Character.getNumericValue(login.charAt(i)) * pesos1[i];
+	    }
+	    int dig1 = soma % 11;
+	    dig1 = (dig1 < 2) ? 0 : 11 - dig1;
+
+	    soma = 0;
+	    for (int i = 0; i < 13; i++) {
+	        int num = Character.getNumericValue(login.charAt(i));
+	        soma += num * pesos2[i];
+	    }
+	    int dig2 = soma % 11;
+	    dig2 = (dig2 < 2) ? 0 : 11 - dig2;
 	    
-	    if (verificarLogin_Emp(login, senha)) {
-	        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Hub_emp.fxml"));
-	        Parent root = loader.load();
-	        
-	        HubController hubController = loader.getController();
-	        hubController.setNomeUsuarioEmp(login);
-	        
-	        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();    
+	    int cnpjDig13 = Character.getNumericValue(login.charAt(12));
+	    int cnpjDig14 = Character.getNumericValue(login.charAt(13));
+
+	    if (dig1 == cnpjDig13 && dig2 == cnpjDig14) {
+	        return true;
 	    } else {
-	    	label_emp.setText("Login ou senha inválidos");
+	        label_emp.setText("CNPJ inválido");
+	        return false;
 	    }
 	}
 	
